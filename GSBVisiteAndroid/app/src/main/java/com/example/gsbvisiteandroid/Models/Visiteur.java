@@ -1,21 +1,30 @@
 package com.example.gsbvisiteandroid.Models;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class Visiteur implements Serializable {
+    private int id;
     private String username;
     private String nom;
     private String prenom;
     private String tel;
     private String mail;
+    private String matricule;
+    private String dateEmbauche;
 
-    public Visiteur(String username, String nom, String prenom, String tel, String mail) {
+
+    public Visiteur(int id, String username, String nom, String prenom, String tel, String mail, String matricule, String dateEmbauche) {
+        this.id = id;
         this.username = username;
         this.nom = nom;
         this.prenom = prenom;
         this.tel = tel;
         this.mail = mail;
+        this.matricule = matricule;
+        this.dateEmbauche = dateEmbauche;
     }
+
 
     public String getUsername() {
         return username;
@@ -35,6 +44,18 @@ public class Visiteur implements Serializable {
 
     public String getMail() {
         return mail;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDateEmbauche() {
+        return dateEmbauche;
+    }
+
+    public String getMatricule() {
+        return matricule;
     }
 
     @Override

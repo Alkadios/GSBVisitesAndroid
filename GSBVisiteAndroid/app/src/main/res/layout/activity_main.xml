@@ -12,7 +12,7 @@
         android:orientation="horizontal"
         android:gravity="center">
         <TextView
-            android:id="@+id/textViewAdoption"
+            android:id="@+id/textViewVisiteur"
             android:text="Visiteurs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

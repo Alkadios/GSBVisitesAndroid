@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.gsbvisiteandroid.Adapters.RecyclerViewVisiteurAdapter;
 import com.example.gsbvisiteandroid.GsonRequest;
+import com.example.gsbvisiteandroid.Listners.RecyclerTouchVisiteurListener;
 import com.example.gsbvisiteandroid.Models.Visiteur;
 import com.example.gsbvisiteandroid.Models.Visiteurs;
 import com.example.gsbvisiteandroid.VolleyHelper;
@@ -32,9 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bindingMain = ActivityMainBinding.inflate(getLayoutInflater());
-        View view = bindingMain.getRoot();
-        setContentView(view);
-
+        View mainView = bindingMain.getRoot();
+        setContentView(mainView);
 
         recyclerView = bindingMain.rvVisiteur;
         recyclerView.setHasFixedSize(true);
@@ -42,8 +43,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setFocusable(false);
 
-
         setDatas();
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchVisiteurListener(this, recyclerView, ((view, position) -> {
+            Visiteur monVisiteur = dataVisiteur.get(position);
+            Intent detailVisiteur = new Intent(getApplicationContext(), DetailVisiteurActivity.class);
+            detailVisiteur.putExtra("VISITEUR_DETAIL", monVisiteur);
+            startActivity(detailVisiteur);
+        })));
 
         final GsonRequest gsonRequest= new GsonRequest(exempleUrl, Visiteurs.class, null, new Response.Listener<Visiteurs>() {
             @Override
@@ -63,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
         adapter = new RecyclerViewVisiteurAdapter(dataVisiteur);
     }
-
 
     private void setDatas() {
         dataVisiteur = new ArrayList<Visiteur>();

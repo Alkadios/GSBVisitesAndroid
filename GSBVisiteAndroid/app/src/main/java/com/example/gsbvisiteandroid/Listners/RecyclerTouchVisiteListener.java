@@ -5,18 +5,18 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.example.gsbvisiteandroid.Interfaces.RecyclerViewClickListenerVisiteur;
+import com.example.gsbvisiteandroid.Interfaces.RecyclerViewClickListenerVisite;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecyclerTouchVisiteurListener implements RecyclerView.OnItemTouchListener {
+public class RecyclerTouchVisiteListener implements RecyclerView.OnItemTouchListener {
     private GestureDetector gestureDetector;
-    private RecyclerViewClickListenerVisiteur clickVisiteurListener;
+    private RecyclerViewClickListenerVisite clickVisiteListener;
 
-    public RecyclerTouchVisiteurListener(Context context, final RecyclerView recyclerView, final RecyclerViewClickListenerVisiteur clickVisiteurListener)
+    public RecyclerTouchVisiteListener(Context context, final RecyclerView recyclerView, final RecyclerViewClickListenerVisite clickVisiteListener)
     {
-        this.clickVisiteurListener = clickVisiteurListener;
+        this.clickVisiteListener = clickVisiteListener;
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
 
             @Override
@@ -29,8 +29,8 @@ public class RecyclerTouchVisiteurListener implements RecyclerView.OnItemTouchLi
     @Override
     public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
         View child = rv.findChildViewUnder(e.getX() , e.getY());
-        if(child != null && clickVisiteurListener != null && gestureDetector.onTouchEvent(e)){
-            clickVisiteurListener.onClick(child, rv.getChildAdapterPosition(child));
+        if(child != null && clickVisiteListener != null && gestureDetector.onTouchEvent(e)){
+            clickVisiteListener.onClick(child, rv.getChildAdapterPosition(child));
         }
         return false;
     }

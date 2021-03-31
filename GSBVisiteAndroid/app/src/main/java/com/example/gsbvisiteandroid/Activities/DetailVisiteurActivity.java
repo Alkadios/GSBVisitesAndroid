@@ -17,6 +17,7 @@ import com.example.gsbvisiteandroid.GsonRequest;
 import com.example.gsbvisiteandroid.Models.Visite;
 import com.example.gsbvisiteandroid.Models.Visites;
 import com.example.gsbvisiteandroid.Models.Visiteur;
+import com.example.gsbvisiteandroid.Models.Visiteurs;
 import com.example.gsbvisiteandroid.VolleyHelper;
 import com.example.gsbvisiteandroid.databinding.ActivityDetailVisiteurBinding;
 
@@ -32,7 +33,7 @@ public class DetailVisiteurActivity extends AppCompatActivity {
     private List<Visite> dataVisite;
     private RecyclerViewVisiteAdapter adapter = new RecyclerViewVisiteAdapter(dataVisite);
 
-    private final String exempleUrl = "http://192.168.210.6/GSBVisiteAndroid/index.php/visites.json";
+    private String exempleUrl = "http://192.168.210.6/GSBVisiteAndroid/index.php/visiteurs/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +63,16 @@ public class DetailVisiteurActivity extends AppCompatActivity {
             startActivity(detailVisiteur);
         })));
 */
-        final GsonRequest gsonRequest= new GsonRequest(exempleUrl, Visites.class, null, new Response.Listener<Visites>() {
+        exempleUrl += String.valueOf(visiteur.getId()) + ".json";
+        final GsonRequest gsonRequest= new GsonRequest(exempleUrl, Visiteurs.class, null, new Response.Listener<Visiteurs>() {
             @Override
-            public void onResponse(Visites visites) {
-                for (Visite visite : visites.getVisites()) {
+            public void onResponse(Visiteurs visiteurs) {
+                adapter = new RecyclerViewVisiteAdapter(visiteurs.getVisiteur().getVisites());
+                recyclerView.setAdapter(adapter);
+                /*for (Visite visite : visites.getVisites()) {
                     dataVisite.add(visite);
                     recyclerView.setAdapter(adapter);
-                }
+                }*/
             }
         }, new Response.ErrorListener() {
             @Override
@@ -77,7 +81,6 @@ public class DetailVisiteurActivity extends AppCompatActivity {
             }
         });
         VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
-        adapter = new RecyclerViewVisiteAdapter(dataVisite);
     }
 
     private void setDatas() {

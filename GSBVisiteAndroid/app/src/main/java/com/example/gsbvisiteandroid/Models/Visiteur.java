@@ -2,6 +2,7 @@ package com.example.gsbvisiteandroid.Models;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 public class Visiteur implements Serializable {
     private int id;
@@ -13,6 +14,11 @@ public class Visiteur implements Serializable {
     private String matricule;
     private String dateEmbauche;
 
+    public List<Visite> getVisites() {
+        return visites;
+    }
+
+    private List<Visite> visites;
 
     public Visiteur(int id, String username, String nom, String prenom, String tel, String mail, String matricule, String dateEmbauche) {
         this.id = id;

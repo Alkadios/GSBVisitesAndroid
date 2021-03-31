@@ -6,6 +6,12 @@ import java.util.List;
 public class Visiteurs implements Serializable {
     private List<Visiteur> visiteurs;
 
+    public Visiteur getVisiteur() {
+        return visiteur;
+    }
+
+    private Visiteur visiteur;
+
     public Visiteurs(List<Visiteur> list)
     {
         this.visiteurs = list;
